@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="ny">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - NTHAKA DZUKA</title>
+    <style>
+        :root { --green-primary: #006400; --yellow-accent: #FFD700; --bg-color: #f4f9f4; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg-color); margin: 0; padding: 20px; }
+        .admin-container { max-width: 1000px; margin: auto; background: white; padding: 20px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-top: 8px solid var(--green-primary); }
+        h1 { color: var(--green-primary); text-align: center; border-bottom: 3px solid var(--yellow-accent); padding-bottom: 10px; }
+        
+        .notice-box { background-color: #fff3cd; border-left: 5px solid var(--yellow-accent); padding: 20px; margin-bottom: 20px; border-radius: 5px; }
+        .notice-box h3 { margin-top: 0; color: var(--green-primary); }
+        .btn-email { display: inline-block; background-color: var(--green-primary); color: white; padding: 12px 20px; text-decoration: none; border-radius: 5px; font-weight: bold; margin-top: 10px; transition: 0.3s; }
+        .btn-email:hover { background-color: #004d00; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: var(--green-primary); color: white; }
+        tr:hover { background-color: #f1f1f1; }
+        
+        .btn-delete { background-color: #dc3545; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer; }
+        .btn-delete:hover { background-color: #c82333; }
+        .btn-clear { background-color: #ffc107; color: #333; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-weight: bold; margin-bottom: 10px; float: right; }
+        .btn-clear:hover { background-color: #e0a800; }
+        .empty-msg { text-align: center; color: gray; font-style: italic; margin-top: 20px;}
+    </style>
+</head>
+<body>
+
+    <div class="admin-container">
+        <a href="index.html" style="text-decoration: none; color: var(--green-primary); font-weight: bold;">&larr; Bwererani ku Webusaiti</a>
+        <h1>Ma Oda a Makasitomala</h1>
+        
+        <!-- Chidziwitso Chofunikira -->
+        <div class="notice-box">
+            <h3>📧 Ma oda onse akutumizidwa ku Gmail yanu.</h3>
+            <p>Kuti muwone ma oda onse kuchokera kwa makasitomala (pa foni kapena kompyuta ina iliyonse), dinani batani ili m'munsimu kuti mutsegule Gmail yanu (trevorchibwana52@gmail.com) ndikuwona ma oda onse a Formspree.</p>
+            
+            <!-- BATANI LOKULOWETSENI KU GMAIL YANU -->
+            <a href="https://mail.google.com/mail/u/0/#search/from%3Aformspree" target="_blank" class="btn-email">📧 Tsegulani Gmail Kuti Muone Ma Oda</a>
+        </div>
+
+        <hr style="margin: 20px 0;">
+
+        <!-- Gawo la LocalStorage (la pa chipangizo chomwe muli) -->
+        <h3>Ma oda a pa chipangizo ichi (LocalStorage)</h3>
+        <p style="color: gray; font-size: 14px;">Izi ndi ma oda amene munthu wagula pa kompyuta kapena foni imene mukugwiritsa ntchito pano (ngati mwayesa kugula nokha).</p>
+
+        <button class="btn-clear" onclick="clearAllOrders()">Chotsani Maoda Onse</button>
+        <div style="clear: both;"></div>
+
+        <table id="ordersTable">
+            <thead>
+                <tr>
+                    <th>Nambala</th>
+                    <th>Dzina</th>
+                    <th>Foni</th>
+                    <th>Malo</th>
+                    <th>Katundu</th>
+                    <th>Nthawi</th>
+                    <th>Zochita</th>
+                </tr>
+            </thead>
+            <tbody id="ordersBody"></tbody>
+        </table>
+        <p id="emptyMsg" class="empty-msg" style="display: none;">Palibe maoda pa chipangizo ichi pakadali pano.</p>
+    </div>
+
+    <script>
+        function displayOrders() {
+            const orders = JSON.parse(localStorage.getItem('nthakaOrders')) || [];
+            const tbody = document.getElementById('ordersBody');
+            const emptyMsg = document.getElementById('emptyMsg');
+            
+            tbody.innerHTML = '';
+
+            if (orders.length === 0) {
+                emptyMsg.style.display = 'block';
+                return;
+            } else {
+                emptyMsg.style.display = 'none';
+            }
+
+            orders.reverse().forEach(order => {
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>#${order.id.toString().slice(-4)}</td>
+                    <td><strong>${order.name}</strong></td>
+                    <td>${order.phone}</td>
+                    <td>${order.location}</td>
+                    <td>${order.product}</td>
+                    <td>${order.date}</td>
+                    <td><button class="btn-delete" onclick="deleteOrder(${order.id})">Chotsani</button></td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function deleteOrder(id) {
+            if(confirm("Mukutsimikiza kuti mukufuna kuchotsa oda iyi?")) {
+                let orders = JSON.parse(localStorage.getItem('nthakaOrders')) || [];
+                orders = orders.filter(order => order.id !== id);
+                localStorage.setItem('nthakaOrders', JSON.stringify(orders));
+                displayOrders();
+            }
+        }
+
+        function clearAllOrders() {
+            if(confirm("Mukutsimikiza kuti mukufuna kuchotsa ma oda ONSE? Izi sizingathe kubwezedwa.")) {
+                localStorage.removeItem('nthakaOrders');
+                displayOrders();
+            }
+        }
+
+        displayOrders();
+    </script>
+</body>
+</html>

@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="ny">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NTHAKA DZUKA - Feteleza Wabwino</title>
+    <style>
+        :root {
+            --green-primary: #006400;
+            --green-light: #228B22;
+            --yellow-accent: #FFD700;
+            --bg-color: #f4f9f4;
+            --text-dark: #333;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-dark); line-height: 1.6; }
+        
+        header { background-color: white; box-shadow: 0 4px 6px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 1000; }
+        nav { display: flex; justify-content: space-between; align-items: center; padding: 15px 5%; max-width: 1200px; margin: auto; }
+        .logo-text { font-size: 24px; font-weight: 900; color: var(--green-primary); }
+        .logo-text span { color: var(--yellow-accent); text-shadow: 1px 1px 2px rgba(0,0,0,0.5); }
+        .nav-links { list-style: none; display: flex; gap: 20px; }
+        .nav-links a { text-decoration: none; color: var(--green-primary); font-weight: bold; transition: 0.3s; }
+        .nav-links a:hover { color: var(--yellow-accent); }
+        
+        .hero { background: linear-gradient(rgba(0, 100, 0, 0.8), rgba(0, 100, 0, 0.6)), url('https://images.unsplash.com/photo-1625246333195-78d9c38ad449?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80') center/cover; color: white; text-align: center; padding: 100px 20px; }
+        .hero h1 { font-size: 48px; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 2px; }
+        .hero h2 { font-size: 24px; color: var(--yellow-accent); margin-bottom: 20px; font-style: italic; }
+        .hero p { font-size: 18px; max-width: 600px; margin: 0 auto 30px auto; }
+        
+        .btn { background-color: var(--yellow-accent); color: var(--green-primary); padding: 12px 30px; text-decoration: none; font-weight: bold; font-size: 18px; border-radius: 30px; border: none; cursor: pointer; transition: 0.3s; display: inline-block;}
+        .btn:hover { background-color: #e6c200; transform: scale(1.05); }
+        
+        .container { max-width: 1200px; margin: 60px auto; padding: 0 20px; }
+        .section-title { text-align: center; font-size: 32px; color: var(--green-primary); margin-bottom: 40px; position: relative; }
+        .section-title::after { content: ''; width: 80px; height: 4px; background-color: var(--yellow-accent); display: block; margin: 10px auto 0 auto; }
+        
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .product-card { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 5px 15px rgba(0,0,0,0.1); transition: 0.3s; text-align: center; padding-bottom: 20px; border-top: 5px solid var(--green-primary); }
+        .product-card:hover { transform: translateY(-10px); box-shadow: 0 15px 25px rgba(0,0,0,0.2); }
+        .product-img { width: 100%; height: 250px; object-fit: cover; background-color: #e0e0e0; }
+        .product-info { padding: 20px; }
+        .product-info h3 { color: var(--green-primary); font-size: 22px; margin-bottom: 10px; }
+        .price { font-size: 24px; font-weight: bold; color: var(--yellow-accent); text-shadow: 1px 1px 1px rgba(0,0,0,0.5); margin-bottom: 15px; }
+        
+        .about { background-color: var(--green-primary); color: white; padding: 60px 20px; text-align: center; }
+        .about-content { max-width: 800px; margin: auto; }
+        .about h2 { font-size: 32px; margin-bottom: 20px; color: var(--yellow-accent); }
+        .about p { font-size: 18px; margin-bottom: 15px; }
+        
+        footer { background-color: #1a1a1a; color: white; text-align: center; padding: 20px; margin-top: 40px; }
+        footer p { color: var(--yellow-accent); font-weight: bold; }
+        
+        /* Modal */
+        .modal { display: none; position: fixed; z-index: 2000; left: 0; top: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.7); }
+        .modal-content { background-color: white; margin: 10% auto; padding: 30px; border-radius: 10px; width: 90%; max-width: 400px; text-align: center; border-top: 8px solid var(--yellow-accent); }
+        .modal-content h3 { color: var(--green-primary); margin-bottom: 15px; }
+        .modal-content input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 5px; }
+        .close { color: #aaa; float: right; font-size: 28px; font-weight: bold; cursor: pointer; }
+        .close:hover { color: black; }
+        
+        @media (max-width: 768px) { .nav-links { display: none; } .hero h1 { font-size: 32px; } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <nav>
+            <div class="logo-text">NTHAKA <span>DZUKA</span></div>
+            <ul class="nav-links">
+                <li><a href="#home">Kunyumba</a></li>
+                <li><a href="#products">Zogulitsa</a></li>
+                <li><a href="#about">Za Ife</a></li>
+                <li><a href="#contact">Lumikizanani</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="home" class="hero">
+        <h1>NTHAKA DZUKA</h1>
+        <h2>"Khama Lanu, Tsogolo Lanu"</h2>
+        <p>Tikupatsirani feteleza wabwino kwambiri wa NPK kuti mbewu zanu zikule bwino ndikukupatsirani zokolola zochuluka. Feteleza wathu amathandiza nthaka kukhala yabwino.</p>
+        <a href="#products" class="btn">Onani Feteleza Wathu</a>
+    </section>
+
+    <section id="products" class="container">
+        <h2 class="section-title">Feteleza Wathu Wapamwamba</h2>
+        <div class="product-grid">
+            <div class="product-card">
+                <img src="https://sc04.alicdn.com/kf/H6b8f1e6e1b5d4b2d9b7e4d6c8a3f2e1bX.jpg" alt="NPK 50kg" class="product-img" style="object-fit: contain; padding: 20px; background: #fff;">
+                <div class="product-info">
+                    <h3>NPK 50kg (Feteleza Wathunthu)</h3>
+                    <p>Feteleza wothandiza kuti mbewu zanu zikhale zobiriwira, zikule mwamphamvu ndikupanga zipatso zambiri. Ndi woyenera ku mbewu zosiyanasiyana monga chimanga, fodya, ndi masamba.</p>
+                    <br>
+                    <div class="price">Mtengo: K65,000</div>
+                    <button class="btn order-btn" data-product="NPK 50kg">Gula Pano</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1592982537447-7440770cbfc9?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Feteleza Wamadzi" class="product-img">
+                <div class="product-info">
+                    <h3>Feteleza Wamadzi (Liquid Fertilizer)</h3>
+                    <p>Wothandiza kwambiri pa masamba ndi mbewu zazing'ono. Umaugwira ntchito mwachangu ndipo umathandiza kuti mbewu zizolowereka msanga ku nthaka.</p>
+                    <br>
+                    <div class="price">Mtengo: K25,000</div>
+                    <button class="btn order-btn" data-product="Feteleza Wamadzi">Gula Pano</button>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <img src="https://images.unsplash.com/photo-1589923188900-85dae523342b?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="Feteleza wa Urea" class="product-img">
+                <div class="product-info">
+                    <h3>Urea (Feteleza wa Nitrogen)</h3>
+                    <p>Wabwino kwambiri pakukulitsa masamba a mbewu. Amapangitsa kuti mbewu zikhale zobiriwira ndikuthandiza pakupanga kwa mapuloteni mu mbewu.</p>
+                    <br>
+                    <div class="price">Mtengo: K55,000</div>
+                    <button class="btn order-btn" data-product="Urea">Gula Pano</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="about-content">
+            <h2>Za NTHAKA DZUKA</h2>
+            <p>Ife ndi kampani yothandiza alimi ku Malawi ndi ku maiko ozungulira. Cholinga chathu ndi kupereka feteleza wabwino kwambiri ndi wotsika mtengo kuti alimi apeze phindu lalikulu.</p>
+            <p><strong>"Khama Lanu, Tsogolo Lanu"</strong> - Ndife nawo limodzi paulendo wanu wa ulimi wopambana.</p>
+        </div>
+    </section>
+
+    <footer id="contact">
+        <p>Lumikizanani nafe: 0888 123 456 / 0999 987 654</p>
+        <p>Email: info@nthakadzuka.mw</p>
+        <p style="color: white; margin-top: 10px; font-size: 14px;">&copy; 2023 NTHAKA DZUKA. Maumwini onse ndi otetezedwa.</p>
+    </footer>
+
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Kugula <span id="modalProductName"></span></h3>
+            <p>Chonde lowetsani zambiri zanu kuti tikuthandizeni.</p>
+            
+            <!-- FOMU YOTUMIZA KU EMAIL YANU PA FORMSPREE -->
+            <form id="orderForm" action="https://formspree.io/f/xljbrved" method="POST">
+                <input type="text" name="Dzina" placeholder="Dzina Lanu" required>
+                <input type="tel" name="Foni" placeholder="Nambala ya Foni" required>
+                <input type="text" name="Malo" placeholder="Malo Omwe Muli (Mfumu/Mtauni)" required>
+                <!-- Katundu amene wagula (wobisika koma amatumizidwa) -->
+                <input type="hidden" name="Katundu" id="hiddenProductInput">
+                <button type="submit" class="btn" style="width: 100%; margin-top: 10px;">Tumizani</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const modal = document.getElementById("orderModal");
+        const modalProductName = document.getElementById("modalProductName");
+        const orderBtns = document.querySelectorAll(".order-btn");
+        const closeBtn = document.querySelector(".close");
+        const orderForm = document.getElementById("orderForm");
+        const hiddenProductInput = document.getElementById("hiddenProductInput");
+
+        // Kutsegula Modal
+        orderBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const productName = this.getAttribute('data-product');
+                modalProductName.textContent = productName;
+                hiddenProductInput.value = productName; // Ikani katundu mu fomu
+                modal.style.display = "block";
+            });
+        });
+
+        // Kutseka Modal
+        closeBtn.onclick = function() { modal.style.display = "none"; }
+        window.onclick = function(event) { if (event.target == modal) modal.style.display = "none"; }
+
+        // Kuyankha fomu ikatumizidwa
+        orderForm.addEventListener('submit', function(e) {
+            // Formspree idzatenga ntchito yotumiza ku email
+            setTimeout(() => {
+                alert("Zathandizira! Oda yanu yatumizidwa ku Nthaka Dzuka. Tikulankhulani nawo posachedwa.");
+                modal.style.display = "none";
+                this.reset();
+            }, 500); // Tiyime pang'ono kuti Formspree itumize
+        });
+    </script>
+</body>
+</html>
